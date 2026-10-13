@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shivam Tours & Travels — Receipt Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .badge-receipt { background: #f5c518; color: #0d0d0d; font-family: var(--font-display); font-size: 11px; letter-spacing: 1.5px; padding: 4px 12px; border-radius: 20px; font-weight: 700; }
+    .payment-method-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .pay-opt { display: flex; align-items: center; gap: 7px; background: #1e1e1e; border: 1.5px solid #333; border-radius: var(--radius-sm); padding: 8px 14px; cursor: pointer; transition: all .15s; }
+    .pay-opt input[type=radio] { accent-color: var(--yellow); width: 15px; height: 15px; cursor: pointer; }
+    .pay-opt label { font-size: 13px; font-weight: 600; color: #ccc; cursor: pointer; }
+    .pay-opt:has(input:checked) { border-color: var(--yellow); background: rgba(245,197,24,.1); }
+    .pay-opt:has(input:checked) label { color: var(--yellow); }
+    .receipt-note { background: rgba(245,197,24,.08); border: 1px solid rgba(245,197,24,.25); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 12.5px; color: #bbb; line-height: 1.7; margin-top: 4px; }
+    .receipt-note strong { color: var(--yellow); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo-wrap">
+          <img src="data:image/png;base64,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" alt="Logo" style="display:block;width:100%;height:100%;object-fit:contain;"/>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">Shivam Tours &amp; Travels</div>
+          <div class="brand-sub">Receipt Generator &nbsp;<span class="badge-receipt">RECEIPT</span></div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-wa" href="https://wa.me/917373449495" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.852L.057 23.5l5.83-1.53A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.846 0-3.574-.49-5.064-1.348l-.364-.214-3.762.988.998-3.67-.236-.379A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SECTION 1: COMPANY -->
+    <section class="card" id="sec-company" style="animation-delay:.05s">
+      <div class="card-badge">01</div>
+      <h2 class="card-title"><span class="card-title-icon">🏢</span> Company Details</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Company Name</label>
+          <input type="text" id="companyName" value="Shivam Tours &amp; Travels"/>
+        </div>
+        <div class="field">
+          <label>Phone / Mobile</label>
+          <input type="text" id="companyPhone" value="+91 73734 49495"/>
+        </div>
+        <div class="field">
+          <label>Website</label>
+          <input type="text" id="companyWebsite" value="https://shivamtourstravels.in/"/>
+        </div>
+        <div class="field field-full">
+          <label>Address</label>
+          <textarea id="companyAddress" rows="2">4/184, PAPAKURICHI, NORTH KATOOR, THIRUVERUMBUR 620019</textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: RECEIPT INFO -->
+    <section class="card" id="sec-receiptinfo" style="animation-delay:.10s">
+      <div class="card-badge">02</div>
+      <h2 class="card-title"><span class="card-title-icon">🧾</span> Receipt Information</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Receipt / Invoice No. *</label>
+          <input type="text" id="receiptNumber" placeholder="RCP-001"/>
+        </div>
+        <div class="field">
+          <label>Invoice Date</label>
+          <input type="date" id="receiptDate"/>
+        </div>
+        <div class="field">
+          <label>Payment Mode</label>
+          <div class="payment-method-row">
+            <div class="pay-opt">
+              <input type="radio" name="payMode" id="pm-cash" value="Cash" checked/>
+              <label for="pm-cash">💵 Cash</label>
+            </div>
+            <div class="pay-opt">
+              <input type="radio" name="payMode" id="pm-upi" value="UPI"/>
+              <label for="pm-upi">📱 UPI</label>
+            </div>
+            <div class="pay-opt">
+              <input type="radio" name="payMode" id="pm-card" value="Card"/>
+              <label for="pm-card">💳 Card</label>
+            </div>
+            <div class="pay-opt">
+              <input type="radio" name="payMode" id="pm-bank" value="Bank Transfer"/>
+              <label for="pm-bank">🏦 Bank Transfer</label>
+            </div>
+            <div class="pay-opt">
+              <input type="radio" name="payMode" id="pm-cheque" value="Cheque"/>
+              <label for="pm-cheque">📑 Cheque</label>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Payment Reference / Txn ID <span style="color:#555;font-size:10px;">(optional)</span></label>
+          <input type="text" id="txnId" placeholder="UPI Ref / Cheque No. / Txn ID"/>
+        </div>
+        <div class="field field-full">
+          <label>Subject / Tour Description</label>
+          <input type="text" id="receiptSubject" placeholder="e.g. Ooty Tour Package – 3 Days 2 Nights"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: VEHICLE & TRIP -->
+    <section class="card" id="sec-trip" style="animation-delay:.13s">
+      <div class="card-badge">03</div>
+      <h2 class="card-title"><span class="card-title-icon">🚗</span> Vehicle &amp; Trip Details</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Vehicle Type</label>
+          <input type="text" id="vehicleType" placeholder="e.g. Innova Crysta / Tempo Traveller / Bus"/>
+        </div>
+        <div class="field">
+          <label>Vehicle Number</label>
+          <input type="text" id="vehicleNumber" placeholder="TN 00 XX 0000"/>
+        </div>
+        <div class="field">
+          <label>Pickup Location</label>
+          <input type="text" id="pickupLocation" placeholder="e.g. Chennai Airport"/>
+        </div>
+        <div class="field">
+          <label>Drop Location</label>
+          <input type="text" id="dropLocation" placeholder="e.g. Ooty Bus Stand"/>
+        </div>
+        <div class="field">
+          <label>Travel Date</label>
+          <input type="date" id="travelDate"/>
+        </div>
+        <div class="field">
+          <label>Return Date</label>
+          <input type="date" id="returnDate"/>
+        </div>
+        <div class="field">
+          <label>No. of Passengers</label>
+          <input type="number" id="paxCount" placeholder="4" min="1"/>
+        </div>
+        <div class="field">
+          <label>No. of Days / KM Package</label>
+          <input type="text" id="tripDuration" placeholder="e.g. 3 Days / 300 KM"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CLIENT DETAILS -->
+    <section class="card" id="sec-client" style="animation-delay:.16s">
+      <div class="card-badge">04</div>
+      <h2 class="card-title"><span class="card-title-icon">👤</span> Client Details</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Client Name *</label>
+          <input type="text" id="clientName" placeholder="Full name of the client"/>
+        </div>
+        <div class="field">
+          <label>Client Phone</label>
+          <input type="text" id="clientPhone" placeholder="+91 XXXXX XXXXX"/>
+        </div>
+        <div class="field field-full">
+          <label>Client Address <span style="color:#555;font-size:10px;">(optional)</span></label>
+          <textarea id="clientAddress" rows="2" placeholder="Client address (optional)"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: LINE ITEMS -->
+    <section class="card" id="sec-items" style="animation-delay:.20s">
+      <div class="card-badge">05</div>
+      <h2 class="card-title"><span class="card-title-icon">📦</span> Services &amp; Charges</h2>
+
+      <div class="table-wrap">
+        <table class="items-table" id="itemsTable">
+          <thead>
+            <tr>
+              <th class="col-sno">S.No</th>
+              <th class="col-desc">Service / Item Description</th>
+              <th class="col-qty">Qty</th>
+              <th class="col-unit">Unit</th>
+              <th class="col-rate">Rate (₹)</th>
+              <th class="col-amt">Amount (₹)</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody"></tbody>
+        </table>
+      </div>
+
+      <button class="btn-add-row" onclick="addRow()">
+        <span>＋</span> Add Service / Item
+      </button>
+
+      <div class="quick-tags-wrap">
+        <span class="quick-label">Quick add:</span>
+        <div class="quick-tags">
+          <button class="qtag" onclick="addRow('Per Day 300 KM Package',1,'Day',0)">🛣 KM Package</button>
+          <button class="qtag" onclick="addRow('Driver Bata',1,'Day',500)">👨‍✈️ Driver Bata</button>
+          <button class="qtag" onclick="addRow('Toll & Parking Charges',1,'Trip',0)">🅿 Toll & Parking</button>
+          <button class="qtag" onclick="addRow('Hotel Accommodation',1,'Night',0)">🏨 Hotel</button>
+          <button class="qtag" onclick="addRow('Permit Charges',1,'Trip',0)">📄 Permit</button>
+          <button class="qtag" onclick="addRow('Hills Charge (AC Off)',1,'Trip',0)">⛰ Hills Charge</button>
+          <button class="qtag" onclick="addRow('Fuel Surcharge',1,'Trip',0)">⛽ Fuel</button>
+          <button class="qtag" onclick="addRow('Night Driving Charge',1,'Night',0)">🌙 Night Driving</button>
+          <button class="qtag" onclick="addRow('Sightseeing Entry Tickets',1,'Pax',0)">🎟 Entry Tickets</button>
+          <button class="qtag" onclick="addRow('Guide Charges',1,'Day',0)">🧭 Guide</button>
+          <button class="qtag" onclick="addRow('Meal Package',1,'Pax',0)">🍽 Meals</button>
+          <button class="qtag" onclick="addRow('Airport / Station Pick & Drop',1,'Trip',0)">✈ Airport Transfer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: TOTALS -->
+    <section class="card" id="sec-totals" style="animation-delay:.24s">
+      <div class="card-badge">06</div>
+      <h2 class="card-title"><span class="card-title-icon">💰</span> Payment Summary</h2>
+      <div class="totals-grid">
+        <div class="tax-controls">
+          <div class="field">
+            <label>Tax Type</label>
+            <select id="taxType" onchange="recalcTotals()">
+              <option value="none">No Tax</option>
+              <option value="gst">GST (CGST + SGST)</option>
+              <option value="igst">IGST</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="field" id="taxRateField">
+            <label>Tax Rate (%)</label>
+            <input type="number" id="taxRate" value="0" min="0" max="100" oninput="recalcTotals()"/>
+          </div>
+          <div class="field" id="taxLabelField" style="display:none">
+            <label>Tax Label</label>
+            <input type="text" id="taxLabel" placeholder="e.g. Service Tax"/>
+          </div>
+          <div class="field">
+            <label>Discount (₹)</label>
+            <input type="number" id="discountAmt" value="0" min="0" oninput="recalcTotals()"/>
+          </div>
+          <div class="field">
+            <label>Amount Paid (₹) <span style="color:#555;font-size:10px;">(if partial)</span></label>
+            <input type="number" id="amountPaid" value="0" min="0" oninput="recalcTotals()"/>
+          </div>
+        </div>
+        <div class="totals-box">
+          <div class="total-line">
+            <span>Subtotal</span>
+            <span id="subtotalDisplay">₹ 0.00</span>
+          </div>
+          <div class="total-line" id="discountLine" style="display:none">
+            <span>Discount</span>
+            <span id="discountDisplay" style="color:#e74c3c">− ₹ 0.00</span>
+          </div>
+          <div class="total-line" id="taxLine" style="display:none">
+            <span id="taxLabelDisplay">Tax</span>
+            <span id="taxDisplay">₹ 0.00</span>
+          </div>
+          <div class="total-line grand">
+            <span>Total Amount</span>
+            <span id="grandTotalDisplay">₹ 0.00</span>
+          </div>
+          <div class="total-line" id="paidLine" style="display:none">
+            <span>Amount Paid</span>
+            <span id="paidDisplay" style="color:#27ae60">₹ 0.00</span>
+          </div>
+          <div class="total-line" id="balanceLine" style="display:none">
+            <span>Balance Due</span>
+            <span id="balanceDisplay" style="color:#e74c3c">₹ 0.00</span>
+          </div>
+          <div class="amount-words" id="amountWords">Zero Rupees Only</div>
+        </div>
+      </div>
+      <div class="receipt-note" style="margin-top:16px;">
+        <strong>📌 Note:</strong> Leave "Amount Paid" as 0 to print full receipt. Enter a partial amount to show the balance due on the receipt. The invoice date will auto-fill to today's date when you click Generate.
+      </div>
+    </section>
+
+    <!-- GENERATE -->
+    <div class="generate-wrap">
+      <button class="btn-generate" onclick="generatePDF()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+        Generate &amp; Download Receipt
+      </button>
+      <p class="generate-hint">PDF receipt will be downloaded to your device</p>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Shivam Tours &amp; Travels &nbsp;|&nbsp; <a href="https://wa.me/917373449495" target="_blank">+91 73734 49495</a> &nbsp;|&nbsp; <a href="https://shivamtourstravels.in/" target="_blank">shivamtourstravels.in</a></p>
+  </footer>
+
+  <script src="receipt_script.js"></script>
+</body>
+</html>

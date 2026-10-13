@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<!-- HOME -->
+<url>
+  <loc>https://shivamtourstravels.in/</loc>
+  <priority>1.00</priority>
+</url>
+
+<!-- MAIN PAGES -->
+<url>
+  <loc>https://shivamtourstravels.in/service</loc>
+  <priority>0.90</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/taxi</loc>
+  <priority>0.90</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/about</loc>
+  <priority>0.80</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/contact</loc>
+  <priority>0.80</priority>
+</url>
+
+<!-- SEO SERVICE PAGES (HIGHEST PRIORITY) -->
+<url>
+  <loc>https://shivamtourstravels.in/taxi-service-trichy</loc>
+  <priority>0.95</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/outstation-taxi-trichy</loc>
+  <priority>0.95</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/airport-taxi-service-trichy</loc>
+  <priority>0.95</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/one-way-drop-taxi-trichy</loc>
+  <priority>0.95</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/local-taxi-service-trichy</loc>
+  <priority>0.90</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/car-rental-service-trichy</loc>
+  <priority>0.90</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/tempo-traveller-rental-trichy</loc>
+  <priority>0.85</priority>
+</url>
+
+<url>
+  <loc>https://shivamtourstravels.in/wedding-car-rental-trichy</loc>
+  <priority>0.80</priority>
+</url>
+
+</urlset>

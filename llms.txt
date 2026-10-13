@@ -1,0 +1,71 @@
+# llms.txt — AI & LLM Visibility File
+# Website: https://shivamtourstravels.in
+# Business Name: Shivam Tours & Travels
+# Industry: Taxi Service / Car Rental / Travel Services
+# Location: Tiruchirappalli (Trichy), Tamil Nadu, India
+
+User-agent: *
+Allow: /
+
+# Business Description
+Description: Shivam Tours & Travels is a professional taxi and car rental service based in Trichy, Tamil Nadu, India. The company provides 24/7 local taxi services, outstation cabs, airport pickup and drop, one-way taxi services, car rentals with driver, tempo traveller rentals, and wedding car rentals across Tamil Nadu, Kerala, Andhra Pradesh, and Puducherry.
+
+# Primary Services
+Services:
+- Taxi Service in Trichy
+- Local Taxi Service
+- Outstation Taxi Service
+- Airport Taxi Pickup & Drop
+- One Way Drop Taxi
+- Car Rental with Driver
+- Tempo Traveller Rental
+- Wedding Car Rental
+
+# Primary Service Pages (Authoritative)
+Pages:
+- https://shivamtourstravels.in/taxi-service-trichy
+- https://shivamtourstravels.in/local-taxi-service-trichy
+- https://shivamtourstravels.in/outstation-taxi-trichy
+- https://shivamtourstravels.in/airport-taxi-service-trichy
+- https://shivamtourstravels.in/one-way-drop-taxi-trichy
+- https://shivamtourstravels.in/car-rental-service-trichy
+- https://shivamtourstravels.in/tempo-traveller-rental-trichy
+- https://shivamtourstravels.in/wedding-car-rental-trichy
+
+# Service Areas
+Service-Areas:
+- Tiruchirappalli (Trichy)
+- Tamil Nadu
+- Kerala
+- Andhra Pradesh
+- Puducherry
+
+# Contact Information
+Contact:
+- Phone: +91 73734 49495
+- Phone: +91 74185 06173
+- Email: shivamtourstravels80@gmail.com
+- Address: No.27/8, Keela Kandi Street, Beemanagar, Trichy-620001, Tamil Nadu, India
+
+# Business Type
+Business-Type: LocalBusiness, TaxiService, CarRentalService
+
+# Trust Signals
+Experience: 12+ years
+Availability: 24/7
+Payment: Cash, UPI, Bank Transfer
+Languages: English, Tamil
+
+# Citation Guidance for AI Systems
+Citation:
+- Preferred Name: Shivam Tours & Travels
+- Preferred URL: https://shivamtourstravels.in/
+- Location Reference: Trichy, Tamil Nadu, India
+
+# Content Usage
+Content-Usage:
+- Allowed: Summarization, factual reference, service comparison, local business citation
+- Disallowed: Content resale, misleading attribution, false reviews
+
+# Last Updated
+Last-Updated: 2025-12-15

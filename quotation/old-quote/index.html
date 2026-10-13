@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sri Sarguru Tours & Travels — Quotation Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo-wrap" id="logoPreviewWrap">
+          <img id="logoPreview" src="" alt="Logo" style="display:none;"/>
+          <span class="brand-logo-placeholder" id="logoPlaceholder">🚗</span>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">Sri Sarguru Tours &amp; Travels</div>
+          <div class="brand-sub">Professional Quotation Generator</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-wa" href="https://wa.me/917373449495" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.852L.057 23.5l5.83-1.53A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.846 0-3.574-.49-5.064-1.348l-.364-.214-3.762.988.998-3.67-.236-.379A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SECTION 1: COMPANY DETAILS -->
+    <section class="card" id="sec-company">
+      <div class="card-badge">01</div>
+      <h2 class="card-title"><span class="card-title-icon">🏢</span> Company Details</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Company Name *</label>
+          <input type="text" id="companyName" value="Sri Sarguru Tours &amp; Travels"/>
+        </div>
+        <div class="field">
+          <label>GSTIN</label>
+          <input type="text" id="companyGST" placeholder="33XXXXX0000X1ZX"/>
+        </div>
+        <div class="field">
+          <label>Phone / Mobile</label>
+          <input type="text" id="companyPhone" value="+91 73734 49495"/>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="companyEmail" placeholder="info@srisarguru.com"/>
+        </div>
+        <div class="field">
+          <label>PAN Number</label>
+          <input type="text" id="companyPAN" placeholder="ABCDE1234F"/>
+        </div>
+        <div class="field">
+          <label>Website</label>
+          <input type="text" id="companyWebsite" placeholder="www.srisarguru.com"/>
+        </div>
+        <div class="field field-full">
+          <label>Address</label>
+          <textarea id="companyAddress" rows="2" placeholder="Street, City, State, PIN"></textarea>
+        </div>
+        <div class="field">
+          <label>Company Logo</label>
+          <div class="upload-box" id="logoUploadBox" onclick="document.getElementById('logoFile').click()">
+            <span class="upload-icon">🖼</span>
+            <span class="upload-text">Click to upload logo</span>
+          </div>
+          <input type="file" id="logoFile" accept="image/*" style="display:none" onchange="handleLogoUpload(event)"/>
+        </div>
+        <div class="field">
+          <label>Signature Image</label>
+          <div class="upload-box" id="sigUploadBox" onclick="document.getElementById('sigFile').click()">
+            <span class="upload-icon">✍</span>
+            <span class="upload-text">Click to upload signature</span>
+          </div>
+          <input type="file" id="sigFile" accept="image/*" style="display:none" onchange="handleSigUpload(event)"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: QUOTATION INFO -->
+    <section class="card" id="sec-quoteinfo">
+      <div class="card-badge">02</div>
+      <h2 class="card-title"><span class="card-title-icon">📋</span> Quotation Information</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Quotation Number *</label>
+          <input type="text" id="quoteNumber" placeholder="001"/>
+        </div>
+        <div class="field">
+          <label>Quotation Date *</label>
+          <input type="date" id="quoteDate"/>
+        </div>
+        <div class="field">
+          <label>Valid Until</label>
+          <input type="date" id="quoteExpiry"/>
+        </div>
+        <div class="field">
+          <label>Place of Supply</label>
+          <input type="text" id="placeOfSupply" placeholder="Tamil Nadu"/>
+        </div>
+        <div class="field field-full">
+          <label>Subject / Tour Description</label>
+          <input type="text" id="quoteSubject" placeholder="e.g. Ooty Tour Package – 3 Days 2 Nights"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: VEHICLE & TRIP DETAILS -->
+    <section class="card" id="sec-trip">
+      <div class="card-badge">03</div>
+      <h2 class="card-title"><span class="card-title-icon">🚗</span> Vehicle &amp; Trip Details</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Vehicle Type</label>
+          <input type="text" id="vehicleType" placeholder="e.g. Innova Crysta / Tempo Traveller / Bus"/>
+        </div>
+        <div class="field">
+          <label>Vehicle Number</label>
+          <input type="text" id="vehicleNumber" placeholder="TN 00 XX 0000"/>
+        </div>
+        <div class="field">
+          <label>Pickup Location</label>
+          <input type="text" id="pickupLocation" placeholder="e.g. Chennai Airport"/>
+        </div>
+        <div class="field">
+          <label>Drop Location</label>
+          <input type="text" id="dropLocation" placeholder="e.g. Ooty Bus Stand"/>
+        </div>
+        <div class="field">
+          <label>Travel Date</label>
+          <input type="date" id="travelDate"/>
+        </div>
+        <div class="field">
+          <label>Return Date</label>
+          <input type="date" id="returnDate"/>
+        </div>
+        <div class="field">
+          <label>No. of Passengers</label>
+          <input type="number" id="paxCount" placeholder="4" min="1"/>
+        </div>
+        <div class="field">
+          <label>No. of Days / KM Package</label>
+          <input type="text" id="tripDuration" placeholder="e.g. 3 Days / 300 KM"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CLIENT DETAILS -->
+    <section class="card" id="sec-client">
+      <div class="card-badge">04</div>
+      <h2 class="card-title"><span class="card-title-icon">👤</span> Client Details</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>Client Name / Bill To *</label>
+          <textarea id="billTo" rows="3" placeholder="Client name&#10;Address&#10;City"></textarea>
+        </div>
+        <div class="field">
+          <label>Ship To / Service At</label>
+          <textarea id="shipTo" rows="3" placeholder="Delivery address or same as above"></textarea>
+        </div>
+        <div class="field">
+          <label>Client Phone</label>
+          <input type="text" id="clientPhone" placeholder="+91 XXXXX XXXXX"/>
+        </div>
+        <div class="field">
+          <label>Client Email</label>
+          <input type="email" id="clientEmail" placeholder="client@email.com"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: LINE ITEMS -->
+    <section class="card" id="sec-items">
+      <div class="card-badge">05</div>
+      <h2 class="card-title"><span class="card-title-icon">📦</span> Services &amp; Line Items</h2>
+
+      <div class="table-wrap">
+        <table class="items-table" id="itemsTable">
+          <thead>
+            <tr>
+              <th class="col-sno">S.No</th>
+              <th class="col-desc">Service / Item Description</th>
+              <th class="col-qty">Qty</th>
+              <th class="col-unit">Unit</th>
+              <th class="col-rate">Rate (₹)</th>
+              <th class="col-amt">Amount (₹)</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody"></tbody>
+        </table>
+      </div>
+
+      <button class="btn-add-row" onclick="addRow()">
+        <span>＋</span> Add Service / Item
+      </button>
+
+      <!-- COMMON SERVICES QUICK-ADD -->
+      <div class="quick-tags-wrap">
+        <span class="quick-label">Quick add:</span>
+        <div class="quick-tags">
+          <button class="qtag" onclick="addRow('Per Day 300 KM Package',1,'Day',0)">🛣 KM Package</button>
+          <button class="qtag" onclick="addRow('Driver Bata',1,'Day',500)">👨‍✈️ Driver Bata</button>
+          <button class="qtag" onclick="addRow('Toll & Parking Charges',1,'Trip',0)">🅿 Toll & Parking</button>
+          <button class="qtag" onclick="addRow('Hotel Accommodation',1,'Night',0)">🏨 Hotel</button>
+          <button class="qtag" onclick="addRow('Permit Charges',1,'Trip',0)">📄 Permit</button>
+          <button class="qtag" onclick="addRow('Hills Charge (AC Off)',1,'Trip',0)">⛰ Hills Charge</button>
+          <button class="qtag" onclick="addRow('Fuel Surcharge',1,'Trip',0)">⛽ Fuel</button>
+          <button class="qtag" onclick="addRow('Night Driving Charge',1,'Night',0)">🌙 Night Driving</button>
+          <button class="qtag" onclick="addRow('Sightseeing Entry Tickets',1,'Pax',0)">🎟 Entry Tickets</button>
+          <button class="qtag" onclick="addRow('Guide Charges',1,'Day',0)">🧭 Guide</button>
+          <button class="qtag" onclick="addRow('Meal Package',1,'Pax',0)">🍽 Meals</button>
+          <button class="qtag" onclick="addRow('Airport / Station Pick & Drop',1,'Trip',0)">✈ Airport Transfer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: TOTALS -->
+    <section class="card" id="sec-totals">
+      <div class="card-badge">06</div>
+      <h2 class="card-title"><span class="card-title-icon">💰</span> Totals &amp; Tax</h2>
+      <div class="totals-grid">
+        <div class="tax-controls">
+          <div class="field">
+            <label>Tax Type</label>
+            <select id="taxType" onchange="recalcTotals()">
+              <option value="none">No Tax</option>
+              <option value="gst">GST (CGST + SGST)</option>
+              <option value="igst">IGST</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="field" id="taxRateField">
+            <label>Tax Rate (%)</label>
+            <input type="number" id="taxRate" value="0" min="0" max="100" oninput="recalcTotals()"/>
+          </div>
+          <div class="field" id="taxLabelField" style="display:none">
+            <label>Tax Label</label>
+            <input type="text" id="taxLabel" placeholder="e.g. Service Tax"/>
+          </div>
+          <div class="field">
+            <label>Discount (₹)</label>
+            <input type="number" id="discountAmt" value="0" min="0" oninput="recalcTotals()"/>
+          </div>
+        </div>
+        <div class="totals-box">
+          <div class="total-line">
+            <span>Subtotal</span>
+            <span id="subtotalDisplay">₹ 0.00</span>
+          </div>
+          <div class="total-line" id="discountLine" style="display:none">
+            <span>Discount</span>
+            <span id="discountDisplay" style="color:#e74c3c">− ₹ 0.00</span>
+          </div>
+          <div class="total-line" id="taxLine">
+            <span id="taxLabelDisplay">Tax (0%)</span>
+            <span id="taxDisplay">₹ 0.00</span>
+          </div>
+          <div class="total-line grand">
+            <span>Grand Total</span>
+            <span id="grandTotalDisplay">₹ 0.00</span>
+          </div>
+          <div class="amount-words" id="amountWords">Zero Rupees Only</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: BANK & TERMS -->
+    <section class="card" id="sec-bank">
+      <div class="card-badge">07</div>
+      <h2 class="card-title"><span class="card-title-icon">🏦</span> Bank Details &amp; Terms</h2>
+      <div class="grid-2">
+        <div>
+          <div class="sub-head">Bank Details</div>
+          <div class="field"><label>Bank Name</label><input type="text" id="bankName" placeholder="Axis Bank, Branch"/></div>
+          <div class="field"><label>Account Name</label><input type="text" id="accountName" value="Sri Sarguru Tours &amp; Travels"/></div>
+          <div class="field"><label>Account Number</label><input type="text" id="accountNo" placeholder="XXXXXXXXXXXX"/></div>
+          <div class="field"><label>IFSC Code</label><input type="text" id="ifscCode" placeholder="XXXXXX0000"/></div>
+          <div class="field"><label>UPI ID (optional)</label><input type="text" id="upiId" placeholder="name@upi"/></div>
+        </div>
+        <div>
+          <div class="sub-head">Terms &amp; Conditions</div>
+          <div class="field">
+            <textarea id="termsConditions" rows="9" placeholder="Enter your terms and conditions...">1. NIGHT 10:00 PM TO 6:00 AM — NIGHT DRIVING BATA EXTRA
+2. KM START AND CLOSE FROM CUSTOMER PICKUP LOCATION ONLY
+3. TOLL, PARKING & PERMIT CHARGES EXTRA
+4. HILLS CHARGE EXTRA — AC WILL BE SWITCHED OFF ON HILLS
+5. DRIVER FOOD — CUSTOMER'S RESPONSIBILITY
+6. ADVANCE PAYMENT REQUIRED TO CONFIRM BOOKING
+7. CANCELLATION CHARGES APPLICABLE AS PER POLICY</textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GENERATE -->
+    <div class="generate-wrap">
+      <button class="btn-generate" onclick="generatePDF()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+        Generate &amp; Download PDF
+      </button>
+      <p class="generate-hint">PDF will be downloaded to your device</p>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Sri Sarguru Tours &amp; Travels &nbsp;|&nbsp; <a href="https://wa.me/917373449495" target="_blank">+91 73734 49495</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
